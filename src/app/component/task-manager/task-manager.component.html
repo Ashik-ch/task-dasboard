@@ -1,1 +1,37 @@
-<p>task-manager works!</p>
+<div class="p-4">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded mb-4">
+        Add New Task</button>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+            <h2 class="text-lg font-bold mb-2">To Do</h2>
+            <div cdkDropList id="todoList" class="min-h-[300px] p-2 bg-gray-100 rounded">
+                <div *ngFor="let task of todo" cdkDrag class="bg-white p-3 mb-2 rounded shadow">
+                    {{ task.title }}
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2 class="text-lg font-bold mb-2">In Progress</h2>
+            <div cdkDropList id="inProgressList" class="min-h-[300px] p-2 bg-gray-100 rounded">
+
+                <div *ngFor="let task of inProgress; let i = index" class="bg-white p-3 mb-2 rounded shadow">
+                    <div *ngFor="let task of inProgress" class="bg-white p-3 mb-2 rounded shadow">
+                        {{ task.title }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2 class="text-lg font-bold mb-2">Done</h2>
+            <div cdkDropList id="doneList" class="min-h-[300px] p-2 bg-gray-100 rounded">
+                <div *ngFor="let task of done; let i = index" cdkDrag class="bg-white p-3 mb-2 rounded shadow">
+                    {{ task.title }}
+                </div>
+                <div *ngFor="let task of done" cdkDrag class="bg-white p-3 mb-2 rounded shadow">
+                    {{ task.title }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
