@@ -1,8 +1,10 @@
 <div class="p-4">
-    <button (click)="onAddTask()" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 flex place-self-end">
-        Add New Task
-    </button>
-
+    <div class="flex justify-between">
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Search tasks..." class="border p-2 rounded mb-4" />
+        <button (click)="onAddTask()" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">
+            Add New Task
+        </button>
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- To Do -->
         <div>
@@ -15,7 +17,7 @@
             </div>
             <div cdkDropList id="todoList" class="min-h-[300px] p-2 bg-gray-100 rounded" [cdkDropListData]="todo"
                 [cdkDropListConnectedTo]="['inProgressList', 'doneList']" (cdkDropListDropped)="onDrop($event, 'todo')">
-                @for (task of todo; track $index) {
+                @for (task of todo | filterTask : searchTerm; track $index) {
                 <div cdkDrag class="bg-white p-3 mb-2 rounded shadow space-y-2 relative">
                     <div class="flex justify-between items-center">
                         <div class="text-sm font-semibold">{{ task.title }}</div>
@@ -51,7 +53,7 @@
             <div cdkDropList id="inProgressList" class="min-h-[300px] p-2 bg-gray-100 rounded"
                 [cdkDropListData]="inProgress" [cdkDropListConnectedTo]="['todoList', 'doneList']"
                 (cdkDropListDropped)="onDrop($event, 'inProgress')">
-                @for (task of inProgress; track $index) {
+                @for (task of inProgress | filterTask : searchTerm;; track $index) {
                 <div cdkDrag class="bg-white p-3 mb-2 rounded shadow space-y-2 relative">
                     <div class="flex justify-between items-center">
                         <div class="text-sm font-semibold">{{ task.title }}</div>
@@ -88,7 +90,7 @@
             </div>
             <div cdkDropList id="doneList" class="min-h-[300px] p-2 bg-gray-100 rounded" [cdkDropListData]="done"
                 [cdkDropListConnectedTo]="['todoList', 'inProgressList']" (cdkDropListDropped)="onDrop($event, 'done')">
-                @for (task of done; track $index) {
+                @for (task of done | filterTask : searchTerm;; track $index) {
                 <div cdkDrag class="bg-white p-3 mb-2 rounded shadow space-y-2 relative">
                     <div class="flex justify-between items-center">
                         <div class="text-sm font-semibold">{{ task.title }}</div>

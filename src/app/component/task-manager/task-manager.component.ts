@@ -5,11 +5,12 @@ import { CdkDragDrop, DragDropModule, transferArrayItem } from '@angular/cdk/dra
 import { TaskService } from '../../service';
 import { Task } from './helper';
 import { TaskComponent } from '../task/';
+import { FilterTaskPipe } from "../../pipe";
 
 @Component({
   selector: 'app-task-manager',
   standalone: true,
-  imports: [CommonModule, FormsModule, DragDropModule, TaskComponent],
+  imports: [CommonModule, FormsModule, DragDropModule, TaskComponent, FilterTaskPipe],
   templateUrl: './task-manager.component.html',
   styleUrl: './task-manager.component.css',
 })
@@ -19,6 +20,7 @@ export class TaskManagerComponent implements OnInit {
   done: Task[] = [];
   taskModalVisible = false;
   openDropdown: { list: string; index: number } | null = null;
+  searchTerm = '';
 
   constructor(private readonly taskService: TaskService) { }
 
