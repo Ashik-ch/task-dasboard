@@ -1,13 +1,12 @@
 <div class="p-4">
-    <button (click)="onAddTask()" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">
-        Add New Task
-    </button>
+    <button (click)="onAddTask()" class="bg-blue-500 text-white px-4 py-2 rounded mb-4"> Add New Task </button>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
             <h2 class="text-lg font-bold mb-2">To Do</h2>
             <div cdkDropList id="todoList" class="min-h-[300px] p-2 bg-gray-100 rounded">
-                <div *ngFor="let task of todo" cdkDrag class="bg-white p-3 mb-2 rounded shadow space-y-2">
+                @for (task of todo; track $index) {
+                <div cdkDrag class="bg-white p-3 mb-2 rounded shadow space-y-2">
                     <div class="text-sm font-semibold">{{ task.title }}</div>
                     <select class="w-full rounded border border-gray-300 px-2 py-1 text-sm" [(ngModel)]="task.status"
                         (ngModelChange)="onStatusChange(task, $event)">
@@ -16,12 +15,14 @@
                         <option value="done">Done</option>
                     </select>
                 </div>
+                }
             </div>
         </div>
         <div>
             <h2 class="text-lg font-bold mb-2">In Progress</h2>
             <div cdkDropList id="inProgressList" class="min-h-[300px] p-2 bg-gray-100 rounded">
-                <div *ngFor="let task of inProgress" cdkDrag class="bg-white p-3 mb-2 rounded shadow space-y-2">
+                @for (task of inProgress; track $index) {
+                <div cdkDrag class=" bg-white p-3 mb-2 rounded shadow space-y-2">
                     <div class="text-sm font-semibold">{{ task.title }}</div>
                     <select class="w-full rounded border border-gray-300 px-2 py-1 text-sm" [(ngModel)]="task.status"
                         (ngModelChange)="onStatusChange(task, $event)">
@@ -30,12 +31,14 @@
                         <option value="done">Done</option>
                     </select>
                 </div>
+                }
             </div>
         </div>
         <div>
             <h2 class="text-lg font-bold mb-2">Done</h2>
             <div cdkDropList id="doneList" class="min-h-[300px] p-2 bg-gray-100 rounded">
-                <div *ngFor="let task of done" cdkDrag class="bg-white p-3 mb-2 rounded shadow space-y-2">
+                @for (task of done; track $index) {
+                <div cdkDrag class="bg-white p-3 mb-2 rounded shadow space-y-2">
                     <div class="text-sm font-semibold">{{ task.title }}</div>
                     <select class="w-full rounded border border-gray-300 px-2 py-1 text-sm" [(ngModel)]="task.status"
                         (ngModelChange)="onStatusChange(task, $event)">
@@ -44,13 +47,16 @@
                         <option value="done">Done</option>
                     </select>
                 </div>
+                }
             </div>
         </div>
     </div>
 </div>
 
-<div *ngIf="taskModalVisible" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+@if (taskModalVisible) {
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
     <div class="bg-white p-4 rounded shadow-lg w-full max-w-md">
         <app-task (closeModal)="onCloseModal()"></app-task>
     </div>
 </div>
+}
