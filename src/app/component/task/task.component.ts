@@ -26,15 +26,21 @@ export class TaskComponent implements OnInit {
 
   taskFormBuilder() {
     this.taskFormGroup = this.fb.group({
-      titleForm: ['', Validators.required],
+      title: ['', Validators.required],
       description: [''],
       status: ['todo']
     });
   }
 
   onSubmit(): void {
+    console.log(
+      "this.taskFormGroup.value", this.taskFormGroup.value
+    );
+
     if (this.taskFormGroup.valid) {
       const task: Task = this.taskFormGroup.value;
+      console.log("task", task);
+
       this.taskService.addTask(task).subscribe((res) => {
         console.log(res);
       });
