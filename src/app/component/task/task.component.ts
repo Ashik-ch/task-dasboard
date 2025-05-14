@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, output, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TaskService } from '../../service/task.service';
 import { Task } from '../task-manager';
+import { TaskService } from '../../service';
 
 @Component({
   selector: 'app-task',
@@ -12,11 +12,12 @@ import { Task } from '../task-manager';
   styleUrl: './task.component.css'
 })
 export class TaskComponent implements OnInit {
-  @Output() closeModal: EventEmitter<any> = new EventEmitter();
+  @Output() closeModal = new EventEmitter<void>();
   taskFormGroup!: FormGroup;
+  submitted = false;
 
   constructor(
-    private readonly taskService: TaskService,
+    private taskService: TaskService,
     private fb: FormBuilder
   ) { }
 
@@ -33,20 +34,19 @@ export class TaskComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(
-      "this.taskFormGroup.value", this.taskFormGroup.value
-    );
+    this.submitted = true;
 
-    if (this.taskFormGroup.valid) {
-      const task: Task = this.taskFormGroup.value;
-      this.taskService.addTask(task).subscribe((res) => {
+    if (this.taskFormGroup.invalid) return;
+    const task: Task = this.taskFormGroup.value;
+    this.taskService.addTask(task).subscribe({
+      next: (res) => {
         this.closeModal.emit();
-        console.log(res);
-      });
-    }
+      },
+      error: (err) => console.error(err)
+    });
   }
 
-  onCancel() {
+  onCancel(): void {
     this.closeModal.emit();
   }
 }
