@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, output, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskService } from '../../service/task.service';
 import { Task } from '../task-manager';
@@ -12,7 +12,7 @@ import { Task } from '../task-manager';
   styleUrl: './task.component.css'
 })
 export class TaskComponent implements OnInit {
-
+  @Output() closeModal: EventEmitter<any> = new EventEmitter();
   taskFormGroup!: FormGroup;
 
   constructor(
@@ -39,11 +39,14 @@ export class TaskComponent implements OnInit {
 
     if (this.taskFormGroup.valid) {
       const task: Task = this.taskFormGroup.value;
-      console.log("task", task);
-
       this.taskService.addTask(task).subscribe((res) => {
+        this.closeModal.emit();
         console.log(res);
       });
     }
+  }
+
+  onCancel() {
+    this.closeModal.emit();
   }
 }
