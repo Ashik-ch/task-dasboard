@@ -12,7 +12,7 @@ import { TaskService } from '../../service';
   styleUrl: './task.component.css'
 })
 export class TaskComponent implements OnInit {
-  @Output() closeModal = new EventEmitter<void>();
+  @Output() modalClosed = new EventEmitter<'submit' | 'cancel'>();
   taskFormGroup!: FormGroup;
   submitted = false;
 
@@ -35,18 +35,17 @@ export class TaskComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-
     if (this.taskFormGroup.invalid) return;
     const task: Task = this.taskFormGroup.value;
     this.taskService.addTask(task).subscribe({
-      next: (res) => {
-        this.closeModal.emit();
+      next: () => {
+        this.modalClosed.emit('submit');
       },
       error: (err) => console.error(err)
     });
   }
 
   onCancel(): void {
-    this.closeModal.emit();
+    this.modalClosed.emit('cancel');
   }
 }
