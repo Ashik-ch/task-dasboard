@@ -4,11 +4,12 @@ import { Task } from './helper';
 import { TaskComponent } from '../task/task.component';
 import { TaskService } from '../../service/task.service';
 import { FormsModule } from '@angular/forms';
+import { CdkDragDrop, DragDropModule, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-task-manager',
   standalone: true,
-  imports: [CommonModule, TaskComponent, FormsModule],
+  imports: [CommonModule, TaskComponent, FormsModule, DragDropModule],
   templateUrl: './task-manager.component.html',
   styleUrl: './task-manager.component.css'
 })
@@ -54,6 +55,23 @@ export class TaskManagerComponent implements OnInit {
     const updatedTask = { ...task, status: newStatus };
     this.taskService.updateTask(updatedTask.id, updatedTask).subscribe(() => {
       this.getAllTask();
+    });
+  }
+
+
+  onDrop(event: CdkDragDrop<Task[]>, newStatus: 'todo' | 'inProgress' | 'done'): void {
+    if (event.previousContainer === event.container) {
+      return;
+    }
+    const movedTask = event.previousContainer.data[event.previousIndex];
+    movedTask.status = newStatus;
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+    this.taskService.updateTask(movedTask.id, movedTask).subscribe(() => {
     });
   }
 

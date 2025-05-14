@@ -4,7 +4,8 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
             <h2 class="text-lg font-bold mb-2">To Do</h2>
-            <div cdkDropList id="todoList" class="min-h-[300px] p-2 bg-gray-100 rounded">
+            <div cdkDropList id="todoList" class="min-h-[300px] p-2 bg-gray-100 rounded" [cdkDropListData]="todo"
+                [cdkDropListConnectedTo]="['inProgressList', 'doneList']" (cdkDropListDropped)="onDrop($event, 'todo')">
                 @for (task of todo; track $index) {
                 <div cdkDrag class="bg-white p-3 mb-2 rounded shadow space-y-2">
                     <div class="text-sm font-semibold">{{ task.title }}</div>
@@ -20,7 +21,9 @@
         </div>
         <div>
             <h2 class="text-lg font-bold mb-2">In Progress</h2>
-            <div cdkDropList id="inProgressList" class="min-h-[300px] p-2 bg-gray-100 rounded">
+            <div cdkDropList id="inProgressList" class="min-h-[300px] p-2 bg-gray-100 rounded"
+                [cdkDropListData]="inProgress" [cdkDropListConnectedTo]="['todoList', 'doneList']"
+                (cdkDropListDropped)="onDrop($event, 'inProgress')">
                 @for (task of inProgress; track $index) {
                 <div cdkDrag class=" bg-white p-3 mb-2 rounded shadow space-y-2">
                     <div class="text-sm font-semibold">{{ task.title }}</div>
@@ -36,7 +39,8 @@
         </div>
         <div>
             <h2 class="text-lg font-bold mb-2">Done</h2>
-            <div cdkDropList id="doneList" class="min-h-[300px] p-2 bg-gray-100 rounded">
+            <div cdkDropList id="doneList" class="min-h-[300px] p-2 bg-gray-100 rounded" [cdkDropListData]="done"
+                [cdkDropListConnectedTo]="['todoList', 'inProgressList']" (cdkDropListDropped)="onDrop($event, 'done')">
                 @for (task of done; track $index) {
                 <div cdkDrag class="bg-white p-3 mb-2 rounded shadow space-y-2">
                     <div class="text-sm font-semibold">{{ task.title }}</div>
