@@ -18,6 +18,7 @@ export class TaskManagerComponent implements OnInit {
   inProgress: Task[] = [];
   done: Task[] = [];
   taskModalVisible = false;
+  openDropdown: { list: string; index: number } | null = null;
 
   constructor(
     private readonly taskService: TaskService
@@ -58,7 +59,6 @@ export class TaskManagerComponent implements OnInit {
     });
   }
 
-
   onDrop(event: CdkDragDrop<Task[]>, newStatus: 'todo' | 'inProgress' | 'done'): void {
     if (event.previousContainer === event.container) {
       return;
@@ -75,4 +75,6 @@ export class TaskManagerComponent implements OnInit {
     });
   }
 
+
 }
+
