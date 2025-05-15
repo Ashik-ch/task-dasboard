@@ -2,29 +2,36 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12 and designed to help users manage tasks using a drag-and-drop Kanban-style interface.
 
-## GitHub Repository: `https://github.com/Ashik-ch/task-dashboard`
+## GitHub Repository
+
+`https://github.com/Ashik-ch/task-dashboard`
 
 Getting Started
 Follow the steps below to run the project locally.
 
 ## Prerequisites
+
 Make sure you have the following tools installed on your machine:
  Node.js (version 17 or above)
  Angular CLI
  Git
 
 ## Installation
+
 Clone the repository:
  git clone `https://github.com/Ashik-ch/task-dashboard.git`
  cd task-dashboard
 
-## Install dependencies:
+## Install dependencies
+
  npm install
 
-## Run the project locally:
+## Run the project locally
+
  ng serve
 
-## Open your browser and navigate to:
+## Open your browser and navigate to
+
  `http://localhost:4200`
 
 The application should now be up and running.
